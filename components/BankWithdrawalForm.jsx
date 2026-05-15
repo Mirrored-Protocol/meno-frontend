@@ -11,6 +11,7 @@ import {
   AlertCircle,
   Zap
 } from 'lucide-react';
+import { DISPLAY_ASSET_SYMBOL, MOCK_FIAT_RATE, formatPrice } from '../lib/utils';
 
 // Bank Withdrawal Form Component
 const BankWithdrawalForm = ({ nftValue, onBack, onComplete }) => {
@@ -19,7 +20,7 @@ const BankWithdrawalForm = ({ nftValue, onBack, onComplete }) => {
     accountNumber: '',
     routingNumber: '',
     accountHolderName: '',
-    withdrawalAmount: nftValue * 1800, // ETH to USD conversion
+    withdrawalAmount: nftValue * MOCK_FIAT_RATE,
     currency: 'USD'
   });
   const [currentStep, setCurrentStep] = useState(1);
@@ -57,7 +58,7 @@ const BankWithdrawalForm = ({ nftValue, onBack, onComplete }) => {
   const handleProcessWithdrawal = async () => {
     setIsProcessing(true);
     
-    // Simulate crypto to fiat conversion and withdrawal process
+    // Simulate asset liquidation and payout request processing.
     await new Promise(resolve => setTimeout(resolve, 3000));
     
     setIsProcessing(false);
@@ -68,7 +69,7 @@ const BankWithdrawalForm = ({ nftValue, onBack, onComplete }) => {
     }, 2000);
   };
 
-  const exchangeRate = 1800; // ETH to USD rate
+  const exchangeRate = MOCK_FIAT_RATE;
   const processingFee = formData.withdrawalAmount * 0.025; // 2.5% fee
   const netAmount = formData.withdrawalAmount - processingFee;
 
@@ -88,7 +89,7 @@ const BankWithdrawalForm = ({ nftValue, onBack, onComplete }) => {
         {/* Header with Progress */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-white">Off-Ramp to Bank</h2>
+            <h2 className="text-xl font-bold text-white">Payout to Bank</h2>
             <div className="flex items-center space-x-2">
               {[1, 2, 3].map((step) => (
                 <div
@@ -126,19 +127,23 @@ const BankWithdrawalForm = ({ nftValue, onBack, onComplete }) => {
             >
               {/* Conversion Summary */}
               <div className="bg-gray-800 rounded-lg p-4">
-                <h3 className="text-white font-semibold mb-3">Conversion Summary</h3>
+                <h3 className="text-white font-semibold mb-3">Payout Summary</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-400">NFT Value</span>
-                    <span className="text-white">{nftValue} ETH</span>
+                    <span className="text-gray-400">Asset Value</span>
+                    <span className="text-white">
+                      {formatPrice(nftValue, { symbol: DISPLAY_ASSET_SYMBOL })}
+                    </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Exchange Rate</span>
-                    <span className="text-white">1 ETH = ${exchangeRate.toLocaleString()}</span>
+                    <span className="text-gray-400">Prototype Payout Rate</span>
+                    <span className="text-white">
+                      1 {DISPLAY_ASSET_SYMBOL} = ${exchangeRate.toFixed(2)}
+                    </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Gross Amount</span>
-                    <span className="text-white">${formData.withdrawalAmount.toLocaleString()}</span>
+                    <span className="text-gray-400">Estimated Gross Amount</span>
+                    <span className="text-white">${formData.withdrawalAmount.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">Processing Fee (2.5%)</span>
@@ -258,8 +263,10 @@ const BankWithdrawalForm = ({ nftValue, onBack, onComplete }) => {
                 
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Converting</span>
-                    <span className="text-white">{nftValue} ETH</span>
+                    <span className="text-gray-400">Settling</span>
+                    <span className="text-white">
+                      {formatPrice(nftValue, { symbol: DISPLAY_ASSET_SYMBOL })}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">To Bank</span>
@@ -303,9 +310,9 @@ const BankWithdrawalForm = ({ nftValue, onBack, onComplete }) => {
                   <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Zap size={32} className="text-white animate-pulse" />
                   </div>
-                  <h3 className="text-xl font-bold text-white">Processing Your Transaction</h3>
+                  <h3 className="text-xl font-bold text-white">Processing Your Payout</h3>
                   <p className="text-gray-400">
-                    Converting your NFT to fiat and initiating bank transfer...
+                    Preparing settlement and initiating your bank transfer...
                   </p>
                   <div className="w-full bg-gray-700 rounded-full h-2">
                     <div className="bg-blue-600 h-2 rounded-full animate-pulse" style={{ width: '60%' }}></div>
@@ -321,9 +328,9 @@ const BankWithdrawalForm = ({ nftValue, onBack, onComplete }) => {
                   >
                     <Check size={32} className="text-white" />
                   </motion.div>
-                  <h3 className="text-xl font-bold text-white">Transaction Complete!</h3>
+                  <h3 className="text-xl font-bold text-white">Payout Requested!</h3>
                   <p className="text-gray-400">
-                    Your NFT has been successfully converted to fiat. The funds will arrive in your bank account within 1-3 business days.
+                    Your payout request has been recorded. Funds should arrive in your bank account within 1-3 business days once processing completes.
                   </p>
                   <div className="bg-gray-800 rounded-lg p-4">
                     <div className="text-sm space-y-1">
@@ -367,7 +374,7 @@ const BankWithdrawalForm = ({ nftValue, onBack, onComplete }) => {
               ) : (
                 <>
                   <DollarSign size={20} />
-                  <span>Process Withdrawal</span>
+                  <span>Request Payout</span>
                 </>
               )}
             </button>

@@ -50,7 +50,7 @@ const TermsAgreement = ({ onAgree, onBack, onClose }) => {
                 Important Notice
               </h3>
               <p className="text-yellow-200 text-sm">
-                This action will convert your digital assets to fiat currency. Please read all terms carefully before proceeding.
+                This action starts a payout request based on your digital asset position. Please read all terms carefully before proceeding.
               </p>
             </div>
           </div>
@@ -63,7 +63,7 @@ const TermsAgreement = ({ onAgree, onBack, onClose }) => {
           </p>
           
           <p className="text-white text-sm font-medium mb-4">
-            I understand and acknowledge that by using Meno's off-ramp feature, I am voluntarily converting my digital assets — including NFTs or tokens — into fiat currency that will be transferred to my designated withdrawal method (e.g. bank account or card).
+            I understand and acknowledge that by using Meno's payout flow, I am requesting settlement of my selected digital asset value into a fiat payout method such as a bank account or card.
           </p>
 
           <div className="space-y-4">
@@ -72,34 +72,34 @@ const TermsAgreement = ({ onAgree, onBack, onClose }) => {
             <ul className="space-y-3 text-gray-300 text-sm">
               <li className="flex items-start space-x-2">
                 <span className="text-green-400 font-bold">•</span>
-                <span>I am the rightful owner of the digital assets I choose to off-ramp.</span>
+                <span>I am the rightful owner of the digital assets I choose to settle through this payout flow.</span>
               </li>
               
               <li className="flex items-start space-x-2">
                 <span className="text-green-400 font-bold">•</span>
-                <span>I understand that once off-ramped, these assets will be irreversibly converted and may no longer be accessible on the blockchain.</span>
+                <span>I understand that once payout processing begins, the request may become irreversible depending on settlement status.</span>
               </li>
               
               <li className="flex items-start space-x-2">
                 <span className="text-green-400 font-bold">•</span>
-                <span>I acknowledge that this off-ramping transaction is final and cannot be reversed.</span>
+                <span>I acknowledge that finalized payout processing may not be reversible.</span>
               </li>
               
               <li className="flex items-start space-x-2">
                 <span className="text-green-400 font-bold">•</span>
-                <span>I am solely responsible for ensuring that my local laws and regulations allow for digital asset conversion to fiat.</span>
+                <span>I am solely responsible for ensuring that my local laws and regulations allow for digital asset liquidation and fiat payout.</span>
               </li>
               
               <li className="flex items-start space-x-2">
                 <span className="text-green-400 font-bold">•</span>
-                <span>Meno is not responsible for any incorrect wallet activity, tax obligations, or third-party service limitations related to this off-ramp transaction.</span>
+                <span>Meno is not responsible for incorrect wallet activity, tax obligations, or third-party payout limitations related to this request.</span>
               </li>
             </ul>
           </div>
 
           <div className="mt-6 pt-4 border-t border-gray-700">
             <p className="text-white text-sm font-medium">
-              By continuing, I give my informed consent to convert my selected digital assets into fiat via Meno's off-ramp service.
+              By continuing, I give my informed consent to proceed with Meno's prototype payout service.
             </p>
           </div>
         </div>
@@ -125,7 +125,7 @@ const TermsAgreement = ({ onAgree, onBack, onClose }) => {
               </div>
             </div>
             <span className="text-gray-300 text-sm leading-relaxed">
-              I agree to the above and wish to proceed with off-ramping.
+              I agree to the above and wish to proceed with payout processing.
             </span>
           </label>
         </div>
@@ -152,7 +152,7 @@ const TermsAgreement = ({ onAgree, onBack, onClose }) => {
               </>
             ) : (
               <>
-                <span>Proceed to Off-Ramp</span>
+                <span>Proceed to Payout</span>
                 <ArrowRight size={20} />
               </>
             )}

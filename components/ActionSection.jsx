@@ -5,19 +5,19 @@ export default function ActionSection() {
    const actions = [
       {
          title: "Buy",
-         description: "Mint NFTs from your favourite collections",
+         description: "Acquire assets from curated collections",
          icon: "/images/Buy.png",
          color: "from-blue-500 to-cyan-500",
       },
       {
          title: "Sell",
-         description: "Sell into native tokens",
+         description: "List holdings and settle into marketplace liquidity",
          icon: "/images/Sell.png",
          color: "from-green-500 to-emerald-500",
       },
       {
-         title: "Off-Ramp",
-         description: "Authorize off ramp to your desired fiat currency",
+         title: "Payout",
+         description: "Request bank settlement for supported asset positions",
          icon: "/images/OffRamp.png",
          color: "from-purple-500 to-pink-500",
       },
@@ -32,7 +32,7 @@ export default function ActionSection() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-menoGreen pixel-text mb-4">
-               OFF-RAMP NFT TO FIAT SEAMLESSLY
+               TRADE DIGITAL ASSETS, THEN REQUEST PAYOUT
             </h2>
          </motion.div>
 
