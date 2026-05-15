@@ -25,9 +25,9 @@ export default function LoginModal({ isOpen, onClose }) {
    };
 
    const formatBalance = (balance) => {
-      if (balance === "0" || !balance) return "0.000";
-      const etherValue = parseInt(balance, 16) / Math.pow(10, 18);
-      return etherValue.toFixed(3);
+      const parsed = Number.parseFloat(balance);
+      if (Number.isNaN(parsed)) return "0.000";
+      return parsed.toFixed(3);
    };
 
    const formatAddress = (address) => {
@@ -42,7 +42,7 @@ export default function LoginModal({ isOpen, onClose }) {
          <Modal isOpen={isOpen} onClose={onClose} title="Initializing...">
             <div className="space-y-4 text-center">
                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-violet-400 mx-auto"></div>
-               <p className="text-gray-300">Setting up Web3Auth...</p>
+               <p className="text-gray-300">Restoring prototype wallet...</p>
             </div>
          </Modal>
       );
@@ -75,7 +75,7 @@ export default function LoginModal({ isOpen, onClose }) {
                         Address: {formatAddress(accounts[0])}
                      </p>
                      <p className="text-gray-300 text-sm">
-                        Balance: {formatBalance(balance)} ETH
+                        Balance: {formatBalance(balance)} XLM
                      </p>
                   </div>
                )}
@@ -93,22 +93,23 @@ export default function LoginModal({ isOpen, onClose }) {
    return (
       <Modal isOpen={isOpen} onClose={onClose} title="Login to Meno">
          <div className="space-y-4">
-            <p className="text-gray-300">Connect your wallet to continue</p>
+            <p className="text-gray-300">
+               Start a local prototype wallet session to continue
+            </p>
             <div className="space-y-3">
                <button
                   onClick={handleLogin}
                   className="w-full bg-gray-800 hover:bg-gray-700 text-white py-3 px-4 rounded-lg transition-colors">
-                  Connect with Web3Auth
+                  Launch Prototype Wallet
                </button>
 
-               {/* Placeholder for future wallets */}
-               {["MetaMask", "WalletConnect", "Coinbase Wallet"].map(
+               {["Freighter", "Albedo", "WalletConnect"].map(
                   (wallet) => (
                      <button
                         key={wallet}
                         className="w-full bg-gray-800 hover:bg-gray-700 text-white py-3 px-4 rounded-lg transition-colors opacity-50 cursor-not-allowed"
                         disabled>
-                        Connect {wallet} (Coming Soon)
+                        Connect {wallet} (Planned)
                      </button>
                   )
                )}

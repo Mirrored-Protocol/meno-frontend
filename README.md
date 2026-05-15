@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Meno Frontend
 
-## Getting Started
+Meno is the frontend application for a Stellar-native digital asset marketplace platform. This repository currently contains the original Next.js prototype that we are actively stabilizing and evolving into the real `meno-frontend` product.
 
-First, run the development server:
+## Current State
+
+The app already includes:
+
+1. A landing page and marketplace browse experience
+2. Wallet-aware navigation
+3. Collection ranking and featured asset UI
+4. NFT detail, cart, and off-ramp themed prototype flows
+
+The app is still mid-transition and currently has a mix of:
+
+1. Real frontend structure
+2. Mock marketplace data
+3. Simulated buy and payout flows
+4. Ethereum-oriented auth and pricing assumptions that will be replaced during the Stellar migration
+
+## Immediate Goals
+
+1. Keep the frontend bootable and easy to run locally
+2. Replace broken or mismatched dependencies
+3. Remove placeholder documentation
+4. Prepare the codebase for the move toward Stellar-native wallet and transaction flows
+
+## Local Development
+
+### Prerequisites
+
+1. Node.js 20+
+2. npm 10+
+
+### Setup
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Environment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The current prototype does not require any environment variables to run.
 
-## Learn More
+`.env.example` is included as a placeholder so we have a consistent convention when real frontend secrets and public config are introduced.
 
-To learn more about Next.js, take a look at the following resources:
+Likely future variables:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Public wallet integration config
+2. API base URL
+3. Analytics or monitoring keys
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Notes
 
-## Deploy on Vercel
+1. `app/` contains the Next.js app router entrypoints
+2. `components/` contains marketplace UI, nav, modal, and cart flows
+3. `data/` currently contains mock marketplace datasets
+4. `lib/Web3AuthContext.js` contains the current prototype wallet session provider
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Roadmap Context
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Planning docs for the broader revamp live in:
+
+1. `PRD.md`
+2. `progress.md`
+3. `todo.md`
+
+The multi-repo workspace plan also exists in `/home/jadonamite/Drips/Morgana/meno-workspace`.

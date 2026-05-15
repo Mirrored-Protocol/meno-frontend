@@ -26,7 +26,7 @@ export default function WalletDisplay({ accounts }) {
             <Wallet className="w-4 h-4 text-white" />
           </div>
           <div>
-            <div className="text-white font-medium text-sm">Ethereum</div>
+            <div className="text-white font-medium text-sm">Stellar Prototype</div>
             <div className="text-gray-400 text-xs">{formatAddress(accounts[0])}</div>
           </div>
         </div>
@@ -45,8 +45,8 @@ export default function WalletDisplay({ accounts }) {
       {/* Balance Display */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-gray-400">💎 0.0002 ETH</span>
-          <span className="text-sm text-gray-400">$0.602</span>
+          <span className="text-sm text-gray-400">Lumens balance preview</span>
+          <span className="text-sm text-gray-400">Prototype session</span>
         </div>
       </div>
     </>
