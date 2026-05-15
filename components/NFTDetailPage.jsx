@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Star, ShoppingCart, DollarSign } from 'lucide-react';
 import { useWeb3Auth } from '../lib/Web3AuthContext';
+import { DISPLAY_ASSET_SYMBOL, formatPrice } from '../lib/utils';
 
 // Mock NFT data structure - replace with real API calls
 const generateNFTData = (collectionId, tokenId) => {
@@ -85,7 +86,7 @@ const NFTDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
   const [nftData, setNftData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isFavorited, setIsFavorited] = useState(false);
-  const { loggedIn, userInfo } = useWeb3Auth();
+  const { loggedIn } = useWeb3Auth();
 
   useEffect(() => {
     // Simulate API call
@@ -199,15 +200,15 @@ const NFTDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
               <div className="grid grid-cols-3 gap-4">
                 <div className="bg-gray-800 rounded-lg p-4 text-center">
                   <div className="text-gray-400 text-sm mb-1">List Price</div>
-                  <div className="text-white font-bold text-lg">{nftData.listPrice} ETH</div>
+                  <div className="text-white font-bold text-lg">{formatPrice(nftData.listPrice, { symbol: DISPLAY_ASSET_SYMBOL })}</div>
                 </div>
                 <div className="bg-gray-800 rounded-lg p-4 text-center">
                   <div className="text-gray-400 text-sm mb-1">Floor Price</div>
-                  <div className="text-white font-bold text-lg">{nftData.floorPrice} ETH</div>
+                  <div className="text-white font-bold text-lg">{formatPrice(nftData.floorPrice, { symbol: DISPLAY_ASSET_SYMBOL })}</div>
                 </div>
                 <div className="bg-gray-800 rounded-lg p-4 text-center">
                   <div className="text-gray-400 text-sm mb-1">Top Offer</div>
-                  <div className="text-white font-bold text-lg">{nftData.topOffer} ETH</div>
+                  <div className="text-white font-bold text-lg">{formatPrice(nftData.topOffer, { symbol: DISPLAY_ASSET_SYMBOL })}</div>
                 </div>
               </div>
 
@@ -219,7 +220,7 @@ const NFTDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
                   className="flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors"
                 >
                   <ShoppingCart size={20} />
-                  <span>Buy {nftData.listPrice} ETH</span>
+                  <span>Buy {formatPrice(nftData.listPrice, { symbol: DISPLAY_ASSET_SYMBOL })}</span>
                 </button>
                 <button
                   onClick={handleSell}
@@ -251,7 +252,7 @@ const NFTDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">Last Sale</span>
-                    <span className="text-white">{nftData.lastSale} ETH</span>
+                    <span className="text-white">{formatPrice(nftData.lastSale, { symbol: DISPLAY_ASSET_SYMBOL })}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">Owner</span>

@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ShoppingCart, Trash2, CreditCard } from 'lucide-react';
+import { X, ShoppingCart, CreditCard } from 'lucide-react';
 import { useWeb3Auth } from '../lib/Web3AuthContext';
+import { DISPLAY_ASSET_SYMBOL, formatPrice } from '../lib/utils';
 
 // Shopping Cart Context
 const ShoppingCartContext = createContext();
@@ -78,7 +79,7 @@ const CheckoutModal = () => {
     isCheckoutOpen,
     closeCheckout,
   } = useShoppingCart();
-  const { loggedIn, userInfo } = useWeb3Auth();
+  const { loggedIn } = useWeb3Auth();
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -191,7 +192,7 @@ const CheckoutModal = () => {
                         </div>
                         <div className="text-right">
                           <p className="text-white font-bold">
-                            {item.listPrice} ETH
+                            {formatPrice(item.listPrice, { symbol: DISPLAY_ASSET_SYMBOL })}
                           </p>
                         </div>
                       </motion.div>
@@ -203,7 +204,7 @@ const CheckoutModal = () => {
                     <div className="flex justify-between items-center">
                       <span className="text-lg font-semibold text-white">Total</span>
                       <span className="text-lg font-bold text-white">
-                        {getTotalPrice().toFixed(2)} ETH
+                        {formatPrice(getTotalPrice(), { symbol: DISPLAY_ASSET_SYMBOL })}
                       </span>
                     </div>
                   </div>
@@ -227,7 +228,7 @@ const CheckoutModal = () => {
                     ) : (
                       <>
                         <CreditCard size={20} />
-                        <span>Buy {getTotalPrice().toFixed(2)} ETH</span>
+                        <span>Buy {formatPrice(getTotalPrice(), { symbol: DISPLAY_ASSET_SYMBOL })}</span>
                       </>
                     )}
                   </button>

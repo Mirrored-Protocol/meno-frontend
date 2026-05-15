@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Star } from "lucide-react";
 import { MdVerified } from "react-icons/md";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
+import { DISPLAY_ASSET_SYMBOL, formatPrice } from "../lib/utils";
 
 export default function CollectionTableRow({
    collection,
@@ -14,13 +15,6 @@ export default function CollectionTableRow({
    const handleFavoriteClick = () => {
       setIsFavorited(!isFavorited);
       onFavorite && onFavorite(collection.id, !isFavorited);
-   };
-
-   const formatPrice = (price, showFiat) => {
-      if (showFiat) {
-         return `$${(price * 1800).toLocaleString()}`;
-      }
-      return `${price}ETH`;
    };
 
    const VolumeChangeIndicator = ({ change }) => {
@@ -109,9 +103,10 @@ export default function CollectionTableRow({
          <td className="px-4 py-4">
             <div className="text-right">
                <div className="text-white font-medium">
-                  {showFiat
-                     ? `${(collection.floorId * 1800).toLocaleString()}`
-                     : `${collection.floorId}ETH`}
+                  {formatPrice(collection.floorId, {
+                     showFiat,
+                     symbol: DISPLAY_ASSET_SYMBOL,
+                  })}
                </div>
             </div>
          </td>

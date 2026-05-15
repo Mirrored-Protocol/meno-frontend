@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { formatPrice } from '../lib/utils';
+import { DISPLAY_ASSET_SYMBOL, formatPrice } from '../lib/utils';
 import NFTDetailPage from './NFTDetailPage';
 import { useShoppingCart } from './ShoppingCartProvider';
 import TermsAgreement from './TermsAgreement';
@@ -23,8 +23,6 @@ const NFTCard = ({ collection, showFiat }) => {
   };
 
   const handleCardClick = () => {
-    // Generate a random token ID for demo purposes
-    const tokenId = Math.floor(Math.random() * 9999) + 1;
     setShowDetail(true);
   };
 
@@ -105,7 +103,10 @@ const NFTCard = ({ collection, showFiat }) => {
               <div>
                 <p className="text-gray-400 text-xs">Volume</p>
                 <p className="font-medium text-white">
-                  {collection.volume} ETH
+                  {formatPrice(collection.volume, {
+                    showFiat,
+                    symbol: DISPLAY_ASSET_SYMBOL,
+                  })}
                 </p>
               </div>
               <div className="text-right">

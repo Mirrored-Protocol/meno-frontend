@@ -112,7 +112,7 @@ export default function Hero({ enableParallax = true, enableEntrance = true }) {
                   Floor Price
                </p>
                <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white">
-                  10 ETH
+                  10 XLM
                </p>
             </div>
          </motion.div>
