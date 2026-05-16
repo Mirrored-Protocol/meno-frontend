@@ -16,14 +16,14 @@ The app is still mid-transition and currently has a mix of:
 1. Real frontend structure
 2. Mock marketplace data
 3. Simulated buy and payout flows
-4. Ethereum-oriented auth and pricing assumptions that will be replaced during the Stellar migration
+4. Refactored logic and terminology transitioning from Ethereum-centric to Stellar-native assumptions.
 
 ## Immediate Goals
 
 1. Keep the frontend bootable and easy to run locally
-2. Replace broken or mismatched dependencies
-3. Remove placeholder documentation
-4. Prepare the codebase for the move toward Stellar-native wallet and transaction flows
+2. Maintain Stellar-native terminology and pricing structures
+3. Integrate with real Stellar wallet kits (e.g., Freighter)
+4. Define real API contracts for the meno-backend integration
 
 ## Local Development
 
@@ -58,7 +58,7 @@ Likely future variables:
 1. `app/` contains the Next.js app router entrypoints
 2. `components/` contains marketplace UI, nav, modal, and cart flows
 3. `data/` currently contains mock marketplace datasets
-4. `lib/Web3AuthContext.js` contains the current prototype wallet session provider
+4. `lib/WalletContext.js` contains the current prototype wallet session provider
 
 ## Roadmap Context
 

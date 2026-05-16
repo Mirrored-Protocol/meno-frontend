@@ -41,7 +41,7 @@ export default function LoginModal({ isOpen, onClose }) {
       return (
          <Modal isOpen={isOpen} onClose={onClose} title="Initializing...">
             <div className="space-y-4 text-center">
-               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-violet-400 mx-auto"></div>
+               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-menoGreen mx-auto"></div>
                <p className="text-gray-300">Restoring prototype wallet...</p>
             </div>
          </Modal>
