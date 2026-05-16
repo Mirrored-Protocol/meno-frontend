@@ -14,13 +14,13 @@ import {
 import { DISPLAY_ASSET_SYMBOL, MOCK_FIAT_RATE, formatPrice } from '../lib/utils';
 
 // Bank Withdrawal Form Component
-const BankWithdrawalForm = ({ nftValue, onBack, onComplete }) => {
+const BankWithdrawalForm = ({ assetValue, onBack, onComplete }) => {
   const [formData, setFormData] = useState({
     bankName: '',
     accountNumber: '',
     routingNumber: '',
     accountHolderName: '',
-    withdrawalAmount: nftValue * MOCK_FIAT_RATE,
+    withdrawalAmount: assetValue * MOCK_FIAT_RATE,
     currency: 'USD'
   });
   const [currentStep, setCurrentStep] = useState(1);
@@ -132,7 +132,7 @@ const BankWithdrawalForm = ({ nftValue, onBack, onComplete }) => {
                   <div className="flex justify-between">
                     <span className="text-gray-400">Asset Value</span>
                     <span className="text-white">
-                      {formatPrice(nftValue, { symbol: DISPLAY_ASSET_SYMBOL })}
+                      {formatPrice(assetValue, { symbol: DISPLAY_ASSET_SYMBOL })}
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -265,7 +265,7 @@ const BankWithdrawalForm = ({ nftValue, onBack, onComplete }) => {
                   <div className="flex justify-between">
                     <span className="text-gray-400">Settling</span>
                     <span className="text-white">
-                      {formatPrice(nftValue, { symbol: DISPLAY_ASSET_SYMBOL })}
+                      {formatPrice(assetValue, { symbol: DISPLAY_ASSET_SYMBOL })}
                     </span>
                   </div>
                   <div className="flex justify-between">
