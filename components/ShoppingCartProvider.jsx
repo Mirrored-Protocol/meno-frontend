@@ -30,8 +30,8 @@ export const ShoppingCartProvider = ({ children }) => {
     });
   };
 
-  const removeFromCart = (nftId) => {
-    setCartItems(prev => prev.filter(item => item.id !== nftId));
+  const removeFromCart = (assetId) => {
+    setCartItems(prev => prev.filter(item => item.id !== assetId));
   };
 
   const clearCart = () => {
@@ -292,7 +292,7 @@ const SuccessScreen = () => (
     </motion.div>
     <h3 className="text-xl font-bold text-white mb-2">Purchase Complete!</h3>
     <p className="text-gray-400 mb-6">
-      Your selected assets were staged successfully and marked for wallet delivery.
+      Your selected assets were staged successfully and marked for Stellar wallet delivery.
     </p>
     <div className="flex flex-col sm:flex-row gap-3">
       <button className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">

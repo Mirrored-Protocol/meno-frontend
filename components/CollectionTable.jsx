@@ -201,16 +201,16 @@ export default function CollectionTable() {
                            <SortIcon field="topOffer" />
                         </button>
                      </th>
-                     <th className="text-right px-4 py-3">
-                        <button
-                           onClick={() => handleSort("floorId")}
-                           className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto focus:outline-none">
-                           {" "}
-                           {/* Focus outline removed - edit focus styles here */}
-                           <span>Floor Id</span>
-                           <SortIcon field="floorId" />
-                        </button>
-                     </th>
+                      <th className="text-right px-4 py-3">
+                         <button
+                            onClick={() => handleSort("listedCount")}
+                            className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto focus:outline-none">
+                            {" "}
+                            {/* Focus outline removed - edit focus styles here */}
+                            <span>Listed</span>
+                            <SortIcon field="listedCount" />
+                         </button>
+                      </th>
                      <th className="text-right px-4 py-3">
                         <button
                            onClick={() => handleSort("volume")}

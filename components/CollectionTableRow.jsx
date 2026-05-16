@@ -99,14 +99,11 @@ export default function CollectionTableRow({
             </div>
          </td>
 
-         {/* Floor Id */}
+         {/* Listed Count */}
          <td className="px-4 py-4">
             <div className="text-right">
                <div className="text-white font-medium">
-                  {formatPrice(collection.floorId, {
-                     showFiat,
-                     symbol: DISPLAY_ASSET_SYMBOL,
-                  })}
+                  {collection.listedCount}
                </div>
             </div>
          </td>
