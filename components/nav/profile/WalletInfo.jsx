@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useWeb3Auth } from "../../../lib/Web3AuthContext";
+import { useWallet } from "../../../lib/WalletContext";
 import WalletDisplay from "./WalletDisplay";
 import WalletActions from "./WalletActions";
 
 export default function WalletInfo({ accounts, onClose }) {
-  const { logout } = useWeb3Auth();
+  const { logout } = useWallet();
 
   const handleLogout = async () => {
     onClose();

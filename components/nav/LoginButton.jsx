@@ -1,8 +1,8 @@
 "use client";
-import { useWeb3Auth } from "../../lib/Web3AuthContext";
+import { useWallet } from "../../lib/WalletContext";
 
 export default function LoginButton({ className = "" }) {
-   const { login } = useWeb3Auth();
+   const { login } = useWallet();
 
    return (
       <button

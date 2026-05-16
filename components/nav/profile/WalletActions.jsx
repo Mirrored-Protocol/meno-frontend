@@ -6,10 +6,10 @@ export default function WalletActions({ onLogout }) {
       {/* Action Buttons */}
       <div className="flex gap-3 mt-4">
         <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-colors">
-          Buy NFTs
+          Buy Assets
         </button>
         <button className="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg font-medium transition-colors">
-          Sell NFTs
+          List Assets
         </button>
       </div>
 

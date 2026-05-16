@@ -1,12 +1,12 @@
 import { useRef, useEffect } from "react";
-import { useWeb3Auth } from "../../lib/Web3AuthContext";
+import { useWallet } from "../../lib/WalletContext";
 import ProfileHeader from "./profile/ProfileHeader";
 import ProfileMenu from "./profile/ProfileMenu";
 import WalletInfo from "./profile/WalletInfo";
 
 export default function UserProfileModal({ isOpen, onClose }) {
   const modalRef = useRef(null);
-  const { accounts } = useWeb3Auth();
+  const { accounts } = useWallet();
 
   useEffect(() => {
     const handleClickOutside = (event) => {

@@ -11,7 +11,7 @@ export default function Footer() {
                <div className="flex flex-col md:flex-row items-center gap-4">
                   <Logo />
                   <div className="text-gray-400 text-sm">
-                     You one stop NFT Marketplace | © 2025 MENO
+                     Your digital asset marketplace for the Stellar transition | © 2025 MENO
                   </div>
                </div>
 

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Star, ShoppingCart, DollarSign } from 'lucide-react';
-import { useWeb3Auth } from '../lib/Web3AuthContext';
+import { useWallet } from '../lib/WalletContext';
 import { DISPLAY_ASSET_SYMBOL, formatPrice } from '../lib/utils';
 
-// Mock NFT data structure - replace with real API calls
-const generateNFTData = (collectionId, tokenId) => {
+// Mock asset data structure - replace with real API calls
+const generateAssetData = (collectionId, tokenId) => {
   return {
     id: `${collectionId}-${tokenId}`,
     collectionId,
@@ -23,14 +23,14 @@ const generateNFTData = (collectionId, tokenId) => {
       { type: 'Outfit', value: 'Casual Wear', rarity: 45 },
       { type: 'Accessory', value: 'Headphones', rarity: 8 }
     ],
-    description: 'A unique NFT from the Akuma collection featuring distinctive traits and characteristics.',
-    owner: '0x1234...5678',
-    creator: '0x8765...4321'
+    description: 'A collectible digital asset from the Akuma collection featuring distinctive traits and characteristics.',
+    owner: 'G...PROTOTYPE',
+    creator: 'G...CREATOR'
   };
 };
 
 // Loading Skeleton Component
-const NFTDetailSkeleton = () => (
+const AssetDetailSkeleton = () => (
   <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
     <div className="bg-gray-900 rounded-2xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
       <div className="flex justify-between items-center mb-6">
@@ -81,56 +81,74 @@ const TraitCard = ({ trait }) => (
   </div>
 );
 
-// Main NFT Detail Component
-const NFTDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
-  const [nftData, setNftData] = useState(null);
+// Main Asset Detail Component
+const AssetDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
+  const [assetData, setAssetData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isFavorited, setIsFavorited] = useState(false);
-  const { loggedIn } = useWeb3Auth();
+  const [statusMessage, setStatusMessage] = useState(null);
+  const { loggedIn } = useWallet();
 
   useEffect(() => {
     // Simulate API call
-    const fetchNFTData = async () => {
+    const fetchAssetData = async () => {
       setLoading(true);
       await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
-      const data = generateNFTData(collectionId, tokenId);
-      setNftData(data);
+      const data = generateAssetData(collectionId, tokenId);
+      setAssetData(data);
       setLoading(false);
     };
 
-    fetchNFTData();
+    fetchAssetData();
   }, [collectionId, tokenId]);
 
   const handleFavorite = () => {
     if (!loggedIn) {
-      alert('Please login to add favorites');
+      setStatusMessage({
+        tone: 'warning',
+        text: 'Connect a wallet session to save favorites.',
+      });
       return;
     }
+    setStatusMessage(null);
     setIsFavorited(!isFavorited);
   };
 
   const handleBuy = () => {
     if (!loggedIn) {
-      alert('Please login to purchase NFTs');
+      setStatusMessage({
+        tone: 'warning',
+        text: 'Connect a wallet session before adding this asset to checkout.',
+      });
       return;
     }
-    onAddToCart && onAddToCart(nftData);
+    setStatusMessage({
+      tone: 'success',
+      text: 'Asset added to your checkout queue.',
+    });
+    onAddToCart && onAddToCart(assetData);
   };
 
   const handleSell = () => {
     if (!loggedIn) {
-      alert('Please login to sell NFTs');
+      setStatusMessage({
+        tone: 'warning',
+        text: 'Connect a wallet session before listing assets.',
+      });
       return;
     }
-    // Handle sell logic
-    console.log('Sell NFT:', nftData);
+    setStatusMessage({
+      tone: 'info',
+      text: 'Listing flow is still staged while Stellar settlement is being integrated.',
+    });
+    console.log('List asset:', assetData);
   };
 
   if (loading) {
-    return <NFTDetailSkeleton />;
+    return <AssetDetailSkeleton />;
   }
 
-  if (!nftData) {
+  if (!assetData) {
     return null;
   }
 
@@ -155,7 +173,7 @@ const NFTDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center space-x-3">
               <h1 className="text-2xl font-bold text-white">
-                {nftData.name} {nftData.number}
+                {assetData.name} {assetData.number}
               </h1>
               <button
                 onClick={handleFavorite}
@@ -177,12 +195,12 @@ const NFTDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* NFT Image */}
+            {/* Asset Image */}
             <div className="space-y-4">
               <div className="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl overflow-hidden">
                 <img
-                  src={nftData.image}
-                  alt={`${nftData.name} ${nftData.number}`}
+                  src={assetData.image}
+                  alt={`${assetData.name} ${assetData.number}`}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -190,25 +208,25 @@ const NFTDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
               {/* Description */}
               <div className="bg-gray-800 rounded-lg p-4">
                 <h3 className="text-white font-semibold mb-2">Description</h3>
-                <p className="text-gray-300 text-sm">{nftData.description}</p>
+                <p className="text-gray-300 text-sm">{assetData.description}</p>
               </div>
             </div>
 
-            {/* NFT Details */}
+            {/* Asset Details */}
             <div className="space-y-6">
               {/* Pricing Info */}
               <div className="grid grid-cols-3 gap-4">
                 <div className="bg-gray-800 rounded-lg p-4 text-center">
                   <div className="text-gray-400 text-sm mb-1">List Price</div>
-                  <div className="text-white font-bold text-lg">{formatPrice(nftData.listPrice, { symbol: DISPLAY_ASSET_SYMBOL })}</div>
+                  <div className="text-white font-bold text-lg">{formatPrice(assetData.listPrice, { symbol: DISPLAY_ASSET_SYMBOL })}</div>
                 </div>
                 <div className="bg-gray-800 rounded-lg p-4 text-center">
                   <div className="text-gray-400 text-sm mb-1">Floor Price</div>
-                  <div className="text-white font-bold text-lg">{formatPrice(nftData.floorPrice, { symbol: DISPLAY_ASSET_SYMBOL })}</div>
+                  <div className="text-white font-bold text-lg">{formatPrice(assetData.floorPrice, { symbol: DISPLAY_ASSET_SYMBOL })}</div>
                 </div>
                 <div className="bg-gray-800 rounded-lg p-4 text-center">
                   <div className="text-gray-400 text-sm mb-1">Top Offer</div>
-                  <div className="text-white font-bold text-lg">{formatPrice(nftData.topOffer, { symbol: DISPLAY_ASSET_SYMBOL })}</div>
+                  <div className="text-white font-bold text-lg">{formatPrice(assetData.topOffer, { symbol: DISPLAY_ASSET_SYMBOL })}</div>
                 </div>
               </div>
 
@@ -220,7 +238,7 @@ const NFTDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
                   className="flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors"
                 >
                   <ShoppingCart size={20} />
-                  <span>Buy {formatPrice(nftData.listPrice, { symbol: DISPLAY_ASSET_SYMBOL })}</span>
+                  <span>Buy {formatPrice(assetData.listPrice, { symbol: DISPLAY_ASSET_SYMBOL })}</span>
                 </button>
                 <button
                   onClick={handleSell}
@@ -228,15 +246,29 @@ const NFTDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
                   className="flex items-center justify-center space-x-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors"
                 >
                   <DollarSign size={20} />
-                  <span>Sell</span>
+                  <span>List Asset</span>
                 </button>
               </div>
+
+              {statusMessage && (
+                <div
+                  className={`rounded-lg border p-4 text-sm ${
+                    statusMessage.tone === 'success'
+                      ? 'bg-emerald-950 border-emerald-700 text-emerald-200'
+                      : statusMessage.tone === 'info'
+                        ? 'bg-blue-950 border-blue-700 text-blue-200'
+                        : 'bg-yellow-900 border-yellow-600 text-yellow-200'
+                  }`}
+                >
+                  {statusMessage.text}
+                </div>
+              )}
 
               {/* Traits Section */}
               <div>
                 <h3 className="text-white font-semibold mb-4">Traits</h3>
                 <div className="grid grid-cols-2 gap-3">
-                  {nftData.traits.map((trait, index) => (
+                  {assetData.traits.map((trait, index) => (
                     <TraitCard key={index} trait={trait} />
                   ))}
                 </div>
@@ -247,20 +279,20 @@ const NFTDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
                 <h3 className="text-white font-semibold mb-3">Details</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Token ID</span>
-                    <span className="text-white">{nftData.tokenId}</span>
+                    <span className="text-gray-400">Asset ID</span>
+                    <span className="text-white">{assetData.tokenId}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">Last Sale</span>
-                    <span className="text-white">{formatPrice(nftData.lastSale, { symbol: DISPLAY_ASSET_SYMBOL })}</span>
+                    <span className="text-white">{formatPrice(assetData.lastSale, { symbol: DISPLAY_ASSET_SYMBOL })}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">Owner</span>
-                    <span className="text-white">{nftData.owner}</span>
+                    <span className="text-white">{assetData.owner}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">Creator</span>
-                    <span className="text-white">{nftData.creator}</span>
+                    <span className="text-white">{assetData.creator}</span>
                   </div>
                 </div>
               </div>
@@ -268,7 +300,7 @@ const NFTDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
               {!loggedIn && (
                 <div className="bg-yellow-900 border border-yellow-600 rounded-lg p-4">
                   <p className="text-yellow-200 text-sm">
-                    Please login to purchase or interact with NFTs
+                    Connect a wallet session to purchase or interact with this asset.
                   </p>
                 </div>
               )}
@@ -280,4 +312,4 @@ const NFTDetailPage = ({ collectionId, tokenId, onClose, onAddToCart }) => {
   );
 };
 
-export default NFTDetailPage;
+export default AssetDetailPage;

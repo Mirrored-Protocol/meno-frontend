@@ -1,11 +1,11 @@
 "use client";
 
 import Modal from "../Modal";
-import { useWeb3Auth } from "../../lib/Web3AuthContext";
+import { useWallet } from "../../lib/WalletContext";
 
 export default function LoginModal({ isOpen, onClose }) {
    const { loggedIn, loading, userInfo, accounts, balance, login, logout } =
-      useWeb3Auth();
+      useWallet();
 
    const handleLogin = async () => {
       try {

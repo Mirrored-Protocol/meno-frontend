@@ -3,7 +3,7 @@ import { ChevronRight, Search, Wallet, User, Heart } from "lucide-react";
 export default function ExploreMenu({ isOpen, onToggle, onNavigate }) {
   const exploreSubItems = [
     { icon: Wallet, label: "Portfolio", path: "/portfolio" },
-    { icon: User, label: "NFTs", path: "/nfts" },
+    { icon: User, label: "Assets", path: "/nfts" },
     { icon: Heart, label: "Favourites", path: "/favourites" },
   ];
 

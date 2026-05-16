@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
-import NFTCard from "./NFTCard";
+import AssetCard from "./AssetCard";
 import Toggle from "./Toggle";
 import Pagination from "./Pagination";
 import { collectionRankingData } from "../data/CollectionRankingData";
 
-export default function NFTGrid() {
+export default function AssetGrid() {
    const [activeFilter, setActiveFilter] = useState("All");
    const [showFiat, setShowFiat] = useState(false);
    const [activeTimeFilter, setActiveTimeFilter] = useState("1D");
@@ -50,10 +50,10 @@ export default function NFTGrid() {
             </h2>
          </div>
 
-         {/* NFT Grid - 3x2 layout to match the image */}
+         {/* Asset Grid - 3x2 layout to match the image */}
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {displayedCollections.map((collection) => (
-               <NFTCard
+               <AssetCard
                   key={collection.id}
                   collection={collection}
                   showFiat={showFiat}

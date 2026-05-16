@@ -9,7 +9,7 @@ The app already includes:
 1. A landing page and marketplace browse experience
 2. Wallet-aware navigation
 3. Collection ranking and featured asset UI
-4. NFT detail, cart, and off-ramp themed prototype flows
+4. Asset detail, cart, and payout themed prototype flows
 
 The app is still mid-transition and currently has a mix of:
 
@@ -62,10 +62,10 @@ Likely future variables:
 
 ## Roadmap Context
 
-Planning docs for the broader revamp live in:
+The canonical planning docs for the broader revamp live in:
 
-1. `PRD.md`
-2. `progress.md`
-3. `todo.md`
+1. `/home/jadonamite/Drips/Morgana/meno-workspace/PRD.md`
+2. `/home/jadonamite/Drips/Morgana/meno-workspace/progress.md`
+3. `/home/jadonamite/Drips/Morgana/meno-workspace/todo.md`
 
-The multi-repo workspace plan also exists in `/home/jadonamite/Drips/Morgana/meno-workspace`.
+Local duplicate planning notes in this frontend repo are intentionally ignored so the workspace docs remain the single planning source of truth.

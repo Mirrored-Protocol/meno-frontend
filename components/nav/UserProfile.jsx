@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { ChevronDown, Wallet } from "lucide-react";
-import { useWeb3Auth } from "../../lib/Web3AuthContext";
+import { useWallet } from "../../lib/WalletContext";
 import UserProfileModal from "./UserProfileModal";
 
 export default function UserProfile({ className = "" }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { accounts } = useWeb3Auth();
+  const { accounts } = useWallet();
 
   const formatAddress = (address) => {
     if (!address) return "";

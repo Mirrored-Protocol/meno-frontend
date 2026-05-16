@@ -5,11 +5,11 @@ import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import LoginButton from "./LoginButton";
 import UserProfile from "./UserProfile";
-import { useWeb3Auth } from "../../lib/Web3AuthContext";
+import { useWallet } from "../../lib/WalletContext";
 
 export default function Navbar() {
    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-   const { loggedIn } = useWeb3Auth();
+   const { loggedIn } = useWallet();
 
    return (
       <nav className="flex items-center justify-between w-full px-4 md:px-10 py-4 bg-neutral-950 border-b border-gray-800 z-50 relative">

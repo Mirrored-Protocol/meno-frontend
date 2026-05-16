@@ -49,7 +49,7 @@ export default function MobileSearchOverlay({ isOpen, onClose }) {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search NFTs, collections, users..."
+              placeholder="Search assets, collections, users..."
               className="w-full bg-neutral-800 text-white pl-10 pr-4 py-3 rounded-lg border border-gray-700 focus:border-blue-500 focus:outline-none transition-colors"
             />
           </div>

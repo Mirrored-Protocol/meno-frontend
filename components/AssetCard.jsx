@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { DISPLAY_ASSET_SYMBOL, formatPrice } from '../lib/utils';
-import NFTDetailPage from './NFTDetailPage';
+import AssetDetailPage from './AssetDetailPage';
 import { useShoppingCart } from './ShoppingCartProvider';
 import TermsAgreement from './TermsAgreement';
 import BankWithdrawalForm from './BankWithdrawalForm';
 
-const NFTCard = ({ collection, showFiat }) => {
+const AssetCard = ({ collection, showFiat }) => {
   const [showDetail, setShowDetail] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [showWithdrawal, setShowWithdrawal] = useState(false);
-  const [selectedNFT, setSelectedNFT] = useState(null);
+  const [selectedAsset, setSelectedAsset] = useState(null);
   const { addToCart } = useShoppingCart();
 
   const cardVariants = {
@@ -26,13 +26,13 @@ const NFTCard = ({ collection, showFiat }) => {
     setShowDetail(true);
   };
 
-  const handleAddToCart = (nftData) => {
-    addToCart(nftData);
+  const handleAddToCart = (assetData) => {
+    addToCart(assetData);
     setShowDetail(false);
   };
 
-  const handleSellFlow = (nftData) => {
-    setSelectedNFT(nftData);
+  const handleSellFlow = (assetData) => {
+    setSelectedAsset(assetData);
     setShowDetail(false);
     setShowTerms(true);
   };
@@ -44,7 +44,7 @@ const NFTCard = ({ collection, showFiat }) => {
 
   const handleWithdrawalComplete = () => {
     setShowWithdrawal(false);
-    setSelectedNFT(null);
+    setSelectedAsset(null);
     // Could show success message or redirect
   };
 
@@ -137,9 +137,9 @@ const NFTCard = ({ collection, showFiat }) => {
         </div>
       </motion.div>
 
-      {/* NFT Detail Modal */}
+      {/* Asset Detail Modal */}
       {showDetail && (
-        <NFTDetailPage
+        <AssetDetailPage
           collectionId={collection.id}
           tokenId={Math.floor(Math.random() * 9999) + 1}
           onClose={() => setShowDetail(false)}
@@ -149,21 +149,21 @@ const NFTCard = ({ collection, showFiat }) => {
       )}
 
       {/* Terms Agreement Modal */}
-      {showTerms && selectedNFT && (
+      {showTerms && selectedAsset && (
         <TermsAgreement
           onAgree={handleTermsAgree}
           onBack={handleBackToDetail}
           onClose={() => {
             setShowTerms(false);
-            setSelectedNFT(null);
+            setSelectedAsset(null);
           }}
         />
       )}
 
       {/* Bank Withdrawal Modal */}
-      {showWithdrawal && selectedNFT && (
+      {showWithdrawal && selectedAsset && (
         <BankWithdrawalForm
-          nftValue={selectedNFT.listPrice}
+          assetValue={selectedAsset.listPrice}
           onBack={handleBackToTerms}
           onComplete={handleWithdrawalComplete}
         />
@@ -172,4 +172,4 @@ const NFTCard = ({ collection, showFiat }) => {
   );
 };
 
-export default NFTCard;
+export default AssetCard;

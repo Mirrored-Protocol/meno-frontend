@@ -1,9 +1,9 @@
 "use client";
 
-import { useWeb3Auth } from "../../lib/Web3AuthContext";
+import { useWallet } from "../../lib/WalletContext";
 
 export default function NavActions({ onLoginClick }) {
-   const { loggedIn, accounts } = useWeb3Auth();
+   const { loggedIn, accounts } = useWallet();
 
    const formatAddress = (address) => {
       if (!address) return "";

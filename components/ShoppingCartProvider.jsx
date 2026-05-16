@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShoppingCart, CreditCard } from 'lucide-react';
-import { useWeb3Auth } from '../lib/Web3AuthContext';
+import { useWallet } from '../lib/WalletContext';
 import { DISPLAY_ASSET_SYMBOL, formatPrice } from '../lib/utils';
 
 // Shopping Cart Context
@@ -20,13 +20,13 @@ export const ShoppingCartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
-  const addToCart = (nft) => {
+  const addToCart = (asset) => {
     setCartItems(prev => {
-      const exists = prev.find(item => item.id === nft.id);
+      const exists = prev.find(item => item.id === asset.id);
       if (exists) {
         return prev; // Don't add duplicates
       }
-      return [...prev, { ...nft, addedAt: Date.now() }];
+      return [...prev, { ...asset, addedAt: Date.now() }];
     });
   };
 
@@ -79,16 +79,21 @@ const CheckoutModal = () => {
     isCheckoutOpen,
     closeCheckout,
   } = useShoppingCart();
-  const { loggedIn } = useWeb3Auth();
+  const { loggedIn } = useWallet();
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [checkoutMessage, setCheckoutMessage] = useState(null);
 
   const handlePurchase = async () => {
     if (!loggedIn) {
-      alert('Please login to complete purchase');
+      setCheckoutMessage({
+        tone: 'warning',
+        text: 'Connect a wallet session before completing checkout.',
+      });
       return;
     }
 
+    setCheckoutMessage(null);
     setIsProcessing(true);
     
     // Simulate purchase process
@@ -211,7 +216,7 @@ const CheckoutModal = () => {
 
                   {/* Terms */}
                   <div className="mb-6 text-xs text-gray-400">
-                    By clicking "BUY" you are agreeing to the Meno terms of Service
+                    By completing this staged checkout you agree to the current Meno terms of service.
                   </div>
 
                   {/* Purchase Button */}
@@ -228,15 +233,27 @@ const CheckoutModal = () => {
                     ) : (
                       <>
                         <CreditCard size={20} />
-                        <span>Buy {formatPrice(getTotalPrice(), { symbol: DISPLAY_ASSET_SYMBOL })}</span>
+                        <span>Complete Purchase</span>
                       </>
                     )}
                   </button>
 
+                  {checkoutMessage && (
+                    <div
+                      className={`mt-4 rounded-lg border p-3 text-sm text-center ${
+                        checkoutMessage.tone === 'warning'
+                          ? 'bg-yellow-900 border-yellow-600 text-yellow-200'
+                          : 'bg-blue-950 border-blue-700 text-blue-200'
+                      }`}
+                    >
+                      {checkoutMessage.text}
+                    </div>
+                  )}
+
                   {!loggedIn && (
                     <div className="mt-4 bg-yellow-900 border border-yellow-600 rounded-lg p-3">
                       <p className="text-yellow-200 text-sm text-center">
-                        Please login to complete your purchase
+                        Connect a wallet session to complete this staged purchase.
                       </p>
                     </div>
                   )}
@@ -275,7 +292,7 @@ const SuccessScreen = () => (
     </motion.div>
     <h3 className="text-xl font-bold text-white mb-2">Purchase Complete!</h3>
     <p className="text-gray-400 mb-6">
-      Your NFTs have been successfully purchased and transferred to your wallet.
+      Your selected assets were staged successfully and marked for wallet delivery.
     </p>
     <div className="flex flex-col sm:flex-row gap-3">
       <button className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
