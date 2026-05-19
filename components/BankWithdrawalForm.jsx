@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  CreditCard, 
-  Building, 
-  DollarSign, 
-  ArrowRight, 
-  ArrowLeft, 
-  Check, 
+import {
+  CreditCard,
+  Building,
+  DollarSign,
+  ArrowRight,
+  ArrowLeft,
+  Check,
   Clock,
   AlertCircle,
   Zap
 } from 'lucide-react';
 import { DISPLAY_ASSET_SYMBOL, MOCK_FIAT_RATE, formatPrice } from '../lib/utils';
+import { createPayoutRequest } from '../lib/api';
 
 // Bank Withdrawal Form Component
 const BankWithdrawalForm = ({ assetValue, onBack, onComplete }) => {
@@ -26,6 +27,8 @@ const BankWithdrawalForm = ({ assetValue, onBack, onComplete }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
+  const [payoutId, setPayoutId] = useState(null);
+  const [submitError, setSubmitError] = useState(null);
 
   const validateForm = () => {
     const newErrors = {};
@@ -57,16 +60,29 @@ const BankWithdrawalForm = ({ assetValue, onBack, onComplete }) => {
 
   const handleProcessWithdrawal = async () => {
     setIsProcessing(true);
-    
-    // Simulate asset liquidation and payout request processing.
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    
-    setIsProcessing(false);
-    setCurrentStep(3);
-    
-    setTimeout(() => {
-      onComplete && onComplete();
-    }, 2000);
+    setSubmitError(null);
+
+    try {
+      const bankDetails = JSON.stringify({
+        bankName: formData.bankName,
+        accountNumber: formData.accountNumber,
+        routingNumber: formData.routingNumber,
+        accountHolderName: formData.accountHolderName,
+      });
+
+      const result = await createPayoutRequest({
+        userWallet: 'prototype-wallet',
+        amount: netAmount,
+        bankDetails,
+      });
+
+      setPayoutId(result.id);
+      setCurrentStep(3);
+    } catch (err) {
+      setSubmitError('Failed to submit payout request. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const exchangeRate = MOCK_FIAT_RATE;
@@ -335,11 +351,11 @@ const BankWithdrawalForm = ({ assetValue, onBack, onComplete }) => {
                   <div className="bg-gray-800 rounded-lg p-4">
                     <div className="text-sm space-y-1">
                       <div className="flex justify-between">
-                        <span className="text-gray-400">Transaction ID</span>
-                        <span className="text-white font-mono">TX-{Date.now().toString().slice(-8)}</span>
+                        <span className="text-gray-400">Payout ID</span>
+                        <span className="text-white font-mono text-xs break-all">{payoutId}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-400">Amount Transferred</span>
+                        <span className="text-gray-400">Net Amount</span>
                         <span className="text-green-400">${netAmount.toFixed(2)} USD</span>
                       </div>
                     </div>
@@ -349,6 +365,13 @@ const BankWithdrawalForm = ({ assetValue, onBack, onComplete }) => {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Submit Error */}
+        {submitError && (
+          <div className="mt-4 p-3 bg-red-900/50 border border-red-700 rounded-lg text-red-300 text-sm">
+            {submitError}
+          </div>
+        )}
 
         {/* Action Buttons */}
         {currentStep < 3 && (
