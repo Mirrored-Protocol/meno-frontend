@@ -19,25 +19,25 @@ export default function Footer() {
                <div className="flex items-center gap-4">
                   <a
                      href="#"
-                     className="text-gray-600 hover:text-purple-500 transition-colors">
+                     className="text-gray-600 hover:text-menoGreen transition-colors">
                      <FaTwitter size={20} />
                   </a>
 
                   <a
                      href="https://github.com/abokixyz"
-                     className="text-gray-600 hover:text-purple-500 transition-colors">
+                     className="text-gray-600 hover:text-menoGreen transition-colors">
                      <FaGithub size={20} />
                   </a>
 
                   <a
                      href="#"
-                     className="text-gray-600 hover:text-purple-500 transition-colors">
+                     className="text-gray-600 hover:text-menoGreen transition-colors">
                      <FaTelegram size={20} />
                   </a>
 
                   <a
                      href="#"
-                     className="text-gray-600 hover:text-purple-500 transition-colors">
+                     className="text-gray-600 hover:text-menoGreen transition-colors">
                      <FaDiscord size={20} />
                   </a>
                </div>
