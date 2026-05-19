@@ -1,18 +1,27 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ChevronUp, ChevronDown, Star } from "lucide-react";
 import CollectionTableRow from "./CollectionTableRow";
 import Pagination from "./Pagination";
 import Toggle from "./Toggle";
-import {
-   collectionRankingData,
-   filterCategories,
-   timeFilters,
-} from "../data/CollectionRankingData";
+import { fetchCollections } from "../lib/api";
+import { filterCategories, timeFilters } from "../data/CollectionRankingData";
 
 export default function CollectionTable() {
+   const [collections, setCollections] = useState([]);
+   const [loading, setLoading] = useState(true);
+   const [error, setError] = useState(null);
    const [currentPage, setCurrentPage] = useState(1);
    const [activeFilter, setActiveFilter] = useState("all");
+
+   useEffect(() => {
+      fetchCollections()
+         .then((data) => {
+            setCollections(data.map((c, i) => ({ ...c, rank: i + 1 })));
+         })
+         .catch((err) => setError(err.message))
+         .finally(() => setLoading(false));
+   }, []);
    const [activeTimeFilter, setActiveTimeFilter] = useState("1d");
    const [sortField, setSortField] = useState("rank");
    const [sortDirection, setSortDirection] = useState("asc");
@@ -23,7 +32,7 @@ export default function CollectionTable() {
 
    // Filter and sort data
    const filteredAndSortedData = useMemo(() => {
-      let filtered = collectionRankingData;
+      let filtered = collections;
 
       // Apply category filter
       if (activeFilter === "favorites") {
@@ -87,6 +96,22 @@ export default function CollectionTable() {
          <ChevronDown size={16} className="text-menoGreen" />
       );
    };
+
+   if (loading) {
+      return (
+         <div className="bg-black rounded-xl border border-gray-800 p-12 text-center text-gray-400">
+            Loading collections...
+         </div>
+      );
+   }
+
+   if (error) {
+      return (
+         <div className="bg-black rounded-xl border border-gray-800 p-12 text-center text-red-400">
+            Failed to load collections. Make sure the backend is running.
+         </div>
+      );
+   }
 
    return (
       <div className="bg-black rounded-xl overflow-hidden border border-gray-800 text-sm md:text-base lg:text-lg">
